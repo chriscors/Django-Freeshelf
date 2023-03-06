@@ -9,6 +9,7 @@ django-debug-toolbar = "*"
 django-environ = "*"
 werkzeug = "*"
 django-extensions = "*"
+django-widget-tweaks = "*"
 
 [dev-packages]
 
