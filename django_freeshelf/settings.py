@@ -10,8 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+
 from pathlib import Path
 import environ
+
 
 env = environ.Env(
     # set casting, default value
@@ -52,6 +54,7 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "books",
 ]
+
 SITE_ID = 1
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
@@ -143,3 +146,4 @@ AUTH_USER_MODEL = "books.User"
 # One-week activation window; you may, of course, use a different value.
 ACCOUNT_ACTIVATION_DAYS = 7
 REGISTRATION_AUTO_LOGIN = True  # Automatically log the user in.
+LOGIN_REDIRECT_URL = '/'
