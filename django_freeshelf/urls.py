@@ -20,9 +20,7 @@ from books import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('accounts/', include('registration.backends.default.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('accounts/', include('registration.backends.admin_approval.urls')),
     path('accounts/', include('registration.backends.simple.urls')),
     path('', views.index, name='index')
 

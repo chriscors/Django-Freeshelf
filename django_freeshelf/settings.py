@@ -83,6 +83,10 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
             ],
+
+            'libraries':{
+                'redux_class': 'django_freeshelf.templatetags.redux_class',
+            }
         },
     },
 ]
@@ -147,3 +151,4 @@ AUTH_USER_MODEL = "books.User"
 ACCOUNT_ACTIVATION_DAYS = 7
 REGISTRATION_AUTO_LOGIN = True  # Automatically log the user in.
 LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
