@@ -32,6 +32,39 @@
   </div>
 </form>
 
+{% if results %}
+<h2 class='is-size-3'>Results:</h2>
 
+<div class="columns">
+  {% for result in results %}
+
+    <div class="column is-one-quarter">
+      <div class="card">
+        <div class="card-image">
+          <figure class="image is4by3 p-3">
+            <img src="{{result.img_url}}" alt="Book Cover" class="image">
+          </figure>
+        </div>
+        <header class="card-header">
+          <h3 class="card-header-title">
+            Title: {{result.title}}
+          </h3>
+        </header>
+        <div class="card-content">
+          <div class="content">
+            <h4 class="is-size-4">Author: {{result.author}}</h4>
+            <h4 class="is-size-4">Category: {{result.category.type}}</h4>
+            <p>Author: {{result.description}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <a href="{% url 'resource_add' result %}" class="button"></a>
+
+  {% endfor %}
+</div>
+
+{% endif %}
 {% endblock content %}
 

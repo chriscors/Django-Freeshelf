@@ -44,7 +44,6 @@ def search(request):
 
             results = []
             for result in responses['items']:
-                volume_info = result['volumeInfo'],
                 results.append(Resource(
                     title=result['volumeInfo']['title'],
                     author=result['volumeInfo']['authors'][0],
@@ -53,10 +52,14 @@ def search(request):
                     url=result['volumeInfo']['infoLink']))
                 print(results[-1].__dict__)
             print(results)
-            breakpoint()
-            return render(request, 'books/search.html',
+
+            return render(request, 'search.html',
                           {'form': search_form, 'results': results})
 
     form = SearchForm()
 
     return render(request, 'search.html', {'form': form})
+
+
+def resource_add(request, resource):
+    pass

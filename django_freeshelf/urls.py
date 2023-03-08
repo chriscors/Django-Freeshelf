@@ -24,5 +24,5 @@ urlpatterns = [
     path('accounts/', include('registration.backends.simple.urls')),
     path('', views.index, name='index'),
     path('search/', views.search, name='search'),
-
+    path('added/', views.resource_add, name='resource_add')
 ]
