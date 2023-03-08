@@ -12,6 +12,7 @@ django-extensions = "*"
 django-widget-tweaks = "*"
 django-registration-redux = "*"
 python-slugify = "*"
+requests = "*"
 
 [dev-packages]
 autopep8 = "*"

@@ -22,7 +22,7 @@ class Resource(models.Model):
 
 
 class Category(models.Model):
-    title = models.CharField(max_length=150)
+    type = models.CharField(max_length=150)
     slug = models.SlugField(default=slugify(title))
 
 
