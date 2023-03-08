@@ -3,7 +3,34 @@
 {% load redux_class %}.
 
 {% block content %}
+<form method="post" action=".">
+  <div class="columns">
+    {% csrf_token %}
+    <div class="field column" >
+      <label class="label" >Title</label>
+      <div class="control has-icons-left">
+        {{ form.intitle | add_class:"input"}}
+        <span class="icon is-small is-left">
+          <i class="fas fa-magnifying-glass"></i>
+        </span>
+      </div>
+    </div>
+    <div class="column is-3 field" >
+      <label class="label" >Author</label>
+      <div class="control has-icons-left">
+        {{ form.inauthor | add_class:"input"}}
+        <span class="icon is-small is-left">
+          <i class="fas fa-magnifying-glass"></i>
+        </span>
+      </div>
+    </div>
 
+    <div class="column is-narrow is-flex is-flex-direction-column is-align-content-flex-start">
+      <div class="is-hidden-mobile" style = "height: 30px"></div>
+      <input type="submit" value="{% trans 'Search' %}" class = "button is-primary">
+    </div>
+  </div>
+</form>
 
 
 {% endblock content %}

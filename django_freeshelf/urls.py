@@ -22,6 +22,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/', include('registration.backends.simple.urls')),
-    path('', views.index, name='index')
+    path('', views.index, name='index'),
+    path('search/', views.search, name='search'),
 
 ]

@@ -1,9 +1,9 @@
 from django import forms
 
 
-class Search(forms.Form):
+class SearchForm(forms.Form):
     intitle = forms.CharField(max_length=100, required=True)
-    inauthor = forms.CharField(max_length=100, blank=True, null=True)
+    inauthor = forms.CharField(max_length=100, required=False)
 
     # def __init__(self, *args, **kwargs):
     #     super().__init__(*args, **kwargs)
