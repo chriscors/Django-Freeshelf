@@ -1,0 +1,81 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="static/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="static/books/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="static/books/icons/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://www.jsdelivr.com/package/npm/@creativebulma/bulma-tooltip">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Leckerli+One">
+  <script src="https://kit.fontawesome.com/0aa043e972.js" crossorigin="anonymous"></script>
+  <title>Fav Files</title>
+</head>
+<body class = 'mx-4'>
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="{% url 'index' %}">
+        <i class="fa-solid fa-book px-2"width="112" height="28"></i> 
+        <header class="header" style="font-family: 'Leckerli One'; margin: auto 0">Bookshelf</header>
+      </a>
+      <div class="navbar-burger" data-target="nav-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+    <div class="navbar-menu" id='nav-menu'>
+      <div class="navbar-end">
+        <div class="navbar-item">
+          <div class="buttons" style="flex-wrap: nowrap">
+            {% if  user.is_authenticated %}
+              <a href="/accounts/logout" class="button is-light" style="width: 100%">
+                Log Out
+              </a>
+            {% else %}
+              <a href="/accounts/login" class="button is-light" style="width: 100%">
+                Log In
+              </a>
+              <a href="/accounts/register" class="button is-primary" style="width: 100%">
+                Register
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  {% block content %}{% endblock content %}
+
+</body>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+      // Get all "navbar-burger" elements
+      const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+      // Add a click event on each of them
+      $navbarBurgers.forEach( el => {
+        el.addEventListener('click', () => {
+
+          // Get the target from the "data-target" attribute
+          const target = el.dataset.target;
+          const $target = document.getElementById(target);
+
+          // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+          el.classList.toggle('is-active');
+          $target.classList.toggle('is-active');
+
+        });
+      });
+
+    });
+</script>
+</html>

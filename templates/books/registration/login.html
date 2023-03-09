@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load redux_class %}.
+
+{% block content %}
+
+
+<div class = '' style="height: 100px"></div>
+<div class="columns is-centered">
+  <div class="card column is-one-third-desktop is-half-tablet ">
+    <header class="card-header">
+      <p class="card-header-title">
+        <span class="icon px-3">
+          <i class="fa-solid fa-arrow-right"></i>
+        </span>
+        &nbspLogin
+      </p>
+    </header>
+    <div class="card-content">
+      <form method="post" action=".">
+        {% csrf_token %}
+        <div class="field">
+          <label class="label">Username</label>
+          <div class="control has-icons-left">
+            {{ form.username | add_class:"input"}}
+            <span class="icon is-small is-left">
+              <i class="fas fa-user"></i>
+            </span>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Password</label>
+          <div class="control has-icons-left">
+            {{ form.password | add_class:"input"}}
+            <span class="icon is-small is-left">
+              <i class="fas fa-lock"></i>
+            </span>
+          </div>
+        </div>
+        <div class="is-flex is-justify-content-end">
+          <p class = "">{{form.non_field_errors}}</p>
+          <input type="submit" value="{% trans 'Log in' %}" class = "button is-primary" style = "float:right">
+        </div>
+          <input type="hidden" name="next" value="{{ next }}" />
+      </form>
+  </div>
+</div>
+
+ 
+
+
+  {% endblock %}
