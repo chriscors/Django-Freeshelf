@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<h2 class='is-size-3'>Books:</h2>
+<h2 class='is-size-3'>Group Bookshelf:</h2>
 
 <div class="columns is-multiline">
   {% for book in books %}
@@ -10,21 +10,34 @@
       <div class="card">
         <div class="card-image">
           <figure class="image is4by3 p-3 ">
-            <img class = "is-center"src="{{book.img_url}}" alt="Not Found" onerror="{% static 'books/open-book.png' %}';" class="image is1by1" style = 'max-width:120px;"'>
+            <img class = "is-center"src="{{book.img_url}}" onerror="{% static 'books/open-book.png' %}';" class="mb-1" >
           </figure>
         </div>
         <header class="card-header">
           <h3 class="card-header-title">
-            Title: {{book.title}}
+            {{book.title}}
           </h3>
+          <div class="card-header-icon">
+            {% if user in book.users.all %}
+              <a href = {% url 'resource_unfavorite' book.pk %} class="icon">
+                <i class="heart-icon fa fa-heart fa-solid  has-text-danger" aria-hidden="true"></i>
+              </a>
+            {% else %}
+              <a href = {% url 'resource_favorite' book.pk %} class="icon">
+                <i class="heart-icon fa fa-heart fa-regular  has-text-danger" aria-hidden="true"></i>
+              </a>
+            {% endif %}
+          </div>
         </header>
         <div class="card-content">
-          <div class="content" style = "">
+          <div class="content">
             <h4 class="is-size-6">Author: {{book.author}}</h4>
             <h4 class="is-size-6">Category: {{book.category.type}}</h4>
-            <p style="display:inline-block; max-height:200px; overflow:hidden; text-overflow: ellipsis;">Author: {{book.description}}</p>
-            <a href="{% url 'resource_add' book.api_id %}" class="button is-primary">Add to Library</a>
+            <hr>
+            <h4 class="is-size-6">Description:</h4>
+            <p style="display:inline-block;  overflow:scroll;">{{book.description}}</p>
           </div>
+         <a href="{% url 'resource_add' book.api_id %}" class="button is-primary">Edit Book</a>
         </div>
       </div>
     </div>
@@ -32,4 +45,31 @@
 
   {% endfor %}
 </div>
+<script>
+    
+        var icons = document.getElementsByClassName("heart-icon");
+
+      for (let el of icons) {
+        el.addEventListener("mouseover",(event) => {
+            if(el.classList.contains("fa-regular")) {
+                el.classList.remove("fa-regular");
+                el.classList.add("fa-solid");
+            }
+            else {
+                el.classList.remove("fa-solid");
+                el.classList.add("fa-regular");
+            }
+        })
+        el.addEventListener("mouseleave",(event) => {
+            if(el.classList.contains("fa-regular")) {
+                el.classList.remove("fa-regular");
+                el.classList.add("fa-solid");
+            }
+            else {
+                el.classList.remove("fa-solid");
+                el.classList.add("fa-regular");
+            }
+        })
+        };
+</script>
 {% endblock content %}

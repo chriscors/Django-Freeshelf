@@ -1,0 +1,23 @@
+.card-image img {
+  margin: 0 auto;
+  max-width: 120px;
+  max-height: 150px;
+}
+
+.card-header {
+  padding: 12px;
+}
+.card-header-title {
+  display: -webkit-box;
+  height: 48px;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  padding: 0;
+  margin: auto;
+}
+
+.card-content .content {
+  height: 300px;
+  overflow: scroll;
+}
