@@ -18,9 +18,15 @@
             {{book.title}}
           </h3>
           <div class="card-header-icon">
-            <span class="icon">
-              <i class="heart-icon fa fa-heart fa-regular  has-text-danger" aria-hidden="true"></i>
-            </span>
+            {% if user in book.users.all %}
+              <a href = {% url 'resource_unfavorite' book.pk %} class="icon">
+                <i class="heart-icon fa fa-heart fa-solid  has-text-danger" aria-hidden="true"></i>
+              </a>
+            {% else %}
+              <a href = {% url 'resource_favorite' book.pk %} class="icon">
+                <i class="heart-icon fa fa-heart fa-regular  has-text-danger" aria-hidden="true"></i>
+              </a>
+            {% endif %}
           </div>
         </header>
         <div class="card-content">

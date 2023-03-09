@@ -37,7 +37,7 @@ class Category(models.Model):
 
 
 class User(AbstractUser):
-    favorite_stories = models.ManyToManyField(Resource)
+    favorite_stories = models.ManyToManyField(Resource, related_name="users")
 
     def __repr__(self):
         return f"<User username={self.username}>"
