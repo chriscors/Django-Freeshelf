@@ -4,17 +4,17 @@ from registration import views
 from .forms import SearchForm
 from .models import Resource, Category, User
 import requests
+from django.contrib.auth.decorators import login_required
 
 
+@login_required
 def index(request):
     print(request.user)
-    if request.user.is_authenticated:
-        return render(request, 'list.html',
-                      {"user": request.user, 'books': Resource.objects.all()})
-    else:
-        return redirect('/accounts/login', {"user": request.user})
+    return render(request, 'list.html',
+                  {"user": request.user, 'books': Resource.objects.all()})
 
 
+@login_required
 def search(request):
     api_base = 'https://www.googleapis.com/books/v1/volumes?q='
 
@@ -68,6 +68,7 @@ def search(request):
     return render(request, 'search.html', {'form': form})
 
 
+@login_required
 def resource_add(request, api_id):
     api_base = 'https://www.googleapis.com/books/v1/volumes?q='+api_id
 
