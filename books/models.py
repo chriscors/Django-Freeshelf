@@ -14,6 +14,7 @@ class Resource(models.Model):
     img_url = models.TextField(blank=True, null=True)
     category = models.ForeignKey(
         "Category", on_delete=models.CASCADE, null=True)
+    api_id = models.CharField(max_length=50)
 
     def __str__(self):
         return self.title

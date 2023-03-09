@@ -9,7 +9,8 @@ import requests
 def index(request):
     print(request.user)
     if request.user.is_authenticated:
-        return render(request, 'list.html', {"user": request.user})
+        return render(request, 'list.html',
+                      {"user": request.user, 'books': Resource.objects.all()})
     else:
         return redirect('/accounts/login', {"user": request.user})
 
@@ -48,8 +49,14 @@ def search(request):
                     title=result['volumeInfo']['title'],
                     author=result['volumeInfo']['authors'][0],
                     description=result['volumeInfo']['description'],
-                    img_url=result['volumeInfo']['imageLinks']['thumbnail'],
-                    url=result['volumeInfo']['infoLink']))
+                    url=result['volumeInfo']['infoLink'],
+                    api_id=result['id'],))
+
+                try:
+                    results[-1].img_url = result['volumeInfo']['imageLinks']['thumbnail']
+                except:
+                    print("image unavailable")
+
                 print(results[-1].__dict__)
             print(results)
 
@@ -61,5 +68,27 @@ def search(request):
     return render(request, 'search.html', {'form': form})
 
 
-def resource_add(request, resource):
-    pass
+def resource_add(request, api_id):
+    api_base = 'https://www.googleapis.com/books/v1/volumes?q='+api_id
+
+    api_params = ""
+
+    response = requests.get(api_base)
+    print(response)
+    result = response.json()
+    print(response.url)
+    result = result['items'][0]
+    book = Resource(title=result['volumeInfo']['title'],
+                    author=result['volumeInfo']['authors'][0],
+                    description=result['volumeInfo']['description'],
+                    url=result['volumeInfo']['infoLink'],
+                    api_id=result['id'],)
+
+    try:
+        book.img_url = result['volumeInfo']['imageLinks']['thumbnail']
+    except:
+        print("image unavailable")
+
+    book.save()
+
+    return redirect('index')

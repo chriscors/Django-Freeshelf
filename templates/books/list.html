@@ -1,3 +1,35 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<h2 class='is-size-3'>Books:</h2>
 
-{% block content %}{% endblock content %}
+<div class="columns is-multiline">
+  {% for book in books %}
+
+    <div class="column is-one-quarter">
+      <div class="card">
+        <div class="card-image">
+          <figure class="image is4by3 p-3 ">
+            <img class = "is-center"src="{{book.img_url}}" alt="Not Found" onerror="{% static 'books/open-book.png' %}';" class="image is1by1" style = 'max-width:120px;"'>
+          </figure>
+        </div>
+        <header class="card-header">
+          <h3 class="card-header-title">
+            Title: {{book.title}}
+          </h3>
+        </header>
+        <div class="card-content">
+          <div class="content" style = "">
+            <h4 class="is-size-6">Author: {{book.author}}</h4>
+            <h4 class="is-size-6">Category: {{book.category.type}}</h4>
+            <p style="display:inline-block; max-height:200px; overflow:hidden; text-overflow: ellipsis;">Author: {{book.description}}</p>
+            <a href="{% url 'resource_add' book.api_id %}" class="button is-primary">Add to Library</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+  {% endfor %}
+</div>
+{% endblock content %}
