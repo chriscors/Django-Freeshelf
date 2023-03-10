@@ -113,6 +113,7 @@ def resource_details(request, slug):
     return render(request, 'details.html', {'book': book})
 
 
+@login_required
 def resource_delete(request, slug):
     book = get_object_or_404(Resource, slug=slug)
     book.delete()
