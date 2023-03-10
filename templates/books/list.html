@@ -1,8 +1,40 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<h2 class='is-size-3'>Group Bookshelf:</h2>
+<header class="header">
+  <div class="columns">
+    <div class="column">
+      <p class='title'>Bookshelf</p>
+      <p class="subtitle">View your favorite books</p>
+    </div>
+    <div class="column is-narrow is-flex is-align-items-center">
+        <form action="" method = 'GET'>
+                {% if request.GET.favorite %}{% endif %}
+            <span class="control">
+              <label class="is-checkbox is-rounded">
+                <input id="mycheckbox" checked="" type="checkbox" name = "favorite">
+                <span  class="icon checkmark">
+                  <i class="fa fa-heart"></i>
+                </span>
+                <span>Favorites</span>
+              </label>
+            </span>
+          <div class="select">
+            {{sort_form.order}}
+          </div>
+        </form>
+    </div>
+    <div class="column is-narrow is-flex is-align-items-center">
 
+      {% comment %} {% if user in book.users.all %}
+        <a href = {% url 'resource_unfavorite' book.pk %} class="icon a-heart">
+          <i class="heart-icon is-size-5 fa fa-heart fa-solid  has-text-danger" aria-hidden="true"></i>
+        </a>
+      {% else %} {% endcomment %}
+    </div>
+    <div class="columns is-narrow"></div>
+  </div>
+</header>
 <div class="columns is-multiline">
   {% for book in books %}
 
@@ -17,7 +49,7 @@
           <h3 class="card-header-title">
             {{book.title}}
           </h3>
-          <div class="card-header-icon">
+          {% comment %} <div class="card-header-icon">
             {% if user in book.users.all %}
               <a href = {% url 'resource_unfavorite' book.pk %} class="icon">
                 <i class="heart-icon fa fa-heart fa-solid  has-text-danger" aria-hidden="true"></i>
@@ -27,7 +59,7 @@
                 <i class="heart-icon fa fa-heart fa-regular  has-text-danger" aria-hidden="true"></i>
               </a>
             {% endif %}
-          </div>
+          </div> {% endcomment %}
         </header>
         <div class="card-content">
           <div class="content">
@@ -37,7 +69,22 @@
             <h4 class="is-size-6">Description:</h4>
             <p style="display:inline-block;  overflow:scroll;">{{book.description}}</p>
           </div>
-         <a href="{% url 'resource_add' book.api_id %}" class="button is-primary">Edit Book</a>
+          <div class="columns is-justify-content-end">
+            <div class="column is-narrow">
+              {% if user in book.users.all %}
+                <a href = {% url 'resource_unfavorite' book.pk %} class="icon a-heart">
+                  <i class="heart-icon is-size-5 fa fa-heart fa-solid  has-text-danger" aria-hidden="true"></i>
+                </a>
+              {% else %}
+                <a href = {% url 'resource_favorite' book.pk %} class="icon a-heart">
+                  <i class="heart-icon is-size-5 fa fa-heart fa-regular  has-text-danger" aria-hidden="true"></i>
+                </a>
+              {% endif %}
+            </div>
+            <div class="column is-narrow">
+              <a href="{% url 'resource_details' book.slug %}" class="edit-button button is-primary">Details</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
