@@ -1,7 +1,7 @@
 from django.contrib.auth.views import LogoutView
 from django.shortcuts import render, redirect
 from registration import views
-from .forms import SearchForm
+from .forms import SearchForm, SortForm, EditBookForm
 from .models import Resource, Category, User
 import requests
 from django.contrib.auth.decorators import login_required
@@ -12,7 +12,8 @@ from django.shortcuts import get_object_or_404
 def index(request):
     print(request.user)
     return render(request, 'list.html',
-                  {"user": request.user, 'books': Resource.objects.all()})
+                  {"user": request.user, 'books': Resource.objects.all(),
+                   'sort_form': SortForm()})
 
 
 @login_required
@@ -49,9 +50,12 @@ def search(request):
                 results.append(Resource(
                     title=result['volumeInfo']['title'],
                     author=result['volumeInfo']['authors'][0],
-                    description=result['volumeInfo']['description'],
                     url=result['volumeInfo']['infoLink'],
                     api_id=result['id'],))
+                try:
+                    results[-1].description = result['volumeInfo']['description']
+                except:
+                    print("description unavailable")
 
                 try:
                     results[-1].img_url = result['volumeInfo']['imageLinks']['thumbnail']
@@ -82,9 +86,13 @@ def resource_add(request, api_id):
     result = result['items'][0]
     book = Resource(title=result['volumeInfo']['title'],
                     author=result['volumeInfo']['authors'][0],
-                    description=result['volumeInfo']['description'],
                     url=result['volumeInfo']['infoLink'],
                     api_id=result['id'],)
+
+    try:
+        book.description = result['volumeInfo']['description']
+    except:
+        print("description unavailable")
 
     try:
         book.img_url = result['volumeInfo']['imageLinks']['thumbnail']
@@ -93,7 +101,31 @@ def resource_add(request, api_id):
 
     book.save()
 
+    edit_form = EditBookForm(instance=book)
+
+    return render(request, 'edit.html',
+                  {'form': edit_form, 'book': book})
+
+
+@login_required
+def resource_details(request, slug):
+    book = get_object_or_404(Resource, slug=slug)
+    return render(request, 'details.html', {'book': book})
+
+
+def resource_delete(request, slug):
+    book = get_object_or_404(Resource, slug=slug)
+    book.delete()
     return redirect('index')
+
+
+@login_required
+def resource_edit(request, slug):
+    book = get_object_or_404(Resource, slug=slug)
+    edit_form = EditBookForm(instance=book)
+
+    return render(request, 'edit.html',
+                  {'form': edit_form, 'book': book})
 
 
 @login_required

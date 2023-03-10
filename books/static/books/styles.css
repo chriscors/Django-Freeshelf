@@ -7,6 +7,7 @@
 .card-header {
   padding: 12px;
 }
+
 .card-header-title {
   display: -webkit-box;
   height: 48px;
@@ -21,3 +22,126 @@
   height: 300px;
   overflow: scroll;
 }
+
+.edit-button {
+  justify-self: center;
+}
+
+.a-heart {
+  width: 100%;
+  height: 100%;
+}
+
+/* Swiped from this codepen: */
+label.is-checkbox {
+  background: hsl(217, 71%, 53%);
+  border: 1px solid transparent;
+  color: hsl(0, 0%, 100%);
+  text-align: center;
+  white-space: nowrap;
+  display: inline-flex;
+  justify-content: center;
+  padding: calc(0.375em - 1px) 0.75em;
+  border-radius: 2px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+label.is-checkbox.is-primary {
+  background: hsl(171, 100%, 41%);
+}
+label.is-checkbox.is-info {
+  background: hsl(204, 86%, 53%);
+}
+label.is-checkbox.is-danger {
+  background: hsl(348, 100%, 61%);
+}
+label.is-checkbox.is-warning {
+  background: hsl(48, 100%, 67%);
+  color: hsl(0, 0%, 21%);
+}
+label.is-checkbox.is-warning .checkmark:before {
+  background: rgba(245, 245, 245, 0.8);
+}
+label.is-checkbox.is-success {
+  background: hsl(141, 71%, 48%);
+}
+label.is-checkbox.is-static {
+  background-color: #f5f5f5;
+  border-color: #dbdbdb;
+  color: #7a7a7a;
+  box-shadow: none;
+  pointer-events: none;
+}
+label.is-checkbox.is-static .checkmark:before {
+  background: rgba(122, 122, 122, 0.3);
+}
+label.is-checkbox.is-primary {
+  background: hsl(171, 100%, 41%);
+}
+label.is-checkbox .checkmark {
+  color: transparent;
+  position: relative;
+}
+label.is-checkbox .checkmark i {
+  z-index: 1;
+}
+label.is-checkbox .checkmark:before {
+  content: "";
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 0;
+  border-radius: 2px;
+  background: rgba(54, 54, 54, 0.3);
+  border: 1px solid rgba(54, 54, 54, 0.2);
+}
+label.is-checkbox input[type=checkbox] {
+  position: absolute;
+  visibility: hidden;
+  cursor: pointer;
+}
+label.is-checkbox input[type=checkbox]:checked ~ .checkmark {
+  color: inherit;
+}
+label.is-checkbox.is-rounded {
+  border-radius: 9999px;
+}
+label.is-checkbox.is-rounded .checkmark:before {
+  border-radius: 9999px;
+}
+label.is-checkbox:hover {
+  box-shadow: inset 0px 0px 9999px rgba(0, 0, 0, 0.05);
+}
+label.is-checkbox:active {
+  box-shadow: inset 0px 0px 9999px rgba(0, 0, 0, 0.1);
+}
+label.is-checkbox.is-small {
+  font-size: 0.75rem;
+}
+label.is-checkbox.is-medium {
+  font-size: 1.25rem;
+}
+label.is-checkbox.is-large {
+  font-size: 1.5rem;
+}
+label.is-checkbox .icon, label.is-checkbox .icon.is-small, label.is-checkbox .icon.is-medium, label.is-checkbox .icon.is-large {
+  height: 1.5em;
+  width: 1.5em;
+  margin-left: -0.35em;
+  margin-right: 0.35em;
+}
+label.is-checkbox .icon:first-child:not(:last-child) {
+  margin-right: 0.1875em;
+  margin-left: calc(-01.375em - 1px);
+}
+label.is-checkbox .icon:last-child:not(:first-child) {
+  margin-left: 0.1875em;
+  margin-right: calc(-0.375em - 1px);
+}
+label.is-checkbox .icon:first-child:last-child {
+  margin-left: calc(-0.575em - 1px);
+}/*# sourceMappingURL=styles.css.map */

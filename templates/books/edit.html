@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load redux_class %}.
+{% load static %}
+
+{% block content %}
+ 
+  {{form.title}}
+  {{form.author}}
+  {{form.description}}
+  {{form.url}}
+  {{form.category}}
+
+  <a href={% url 'resource_details' book.slug%} class="button">Save</a>
+{% endblock content %}

@@ -28,5 +28,8 @@ urlpatterns = [
     path('resource/<int:pk>/favorite', views.favorite,
          name='resource_favorite'),
     path('resource/<int:pk>/unfavorite', views.unfavorite,
-         name='resource_unfavorite')
+         name='resource_unfavorite'),
+    path('<slug:slug>/edit', views.resource_edit, name='resource_edit'),
+    path('<slug:slug>', views.resource_details, name='resource_details'),
+    path('<slug:slug>/delete', views.resource_delete, name='resource_delete'),
 ]
