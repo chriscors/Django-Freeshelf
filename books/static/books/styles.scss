@@ -39,12 +39,12 @@ $size-large: 1.5rem;
   max-height: 150px;
 }
 
-.card-header {
+.list-card-header {
   padding: 12px;
 }
-.card-header-title {
+.ellipsis-after-2 {
   display: -webkit-box;
-  height: 48px;
+  height: 3rem;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
@@ -52,9 +52,22 @@ $size-large: 1.5rem;
   margin: auto;
 }
 
-.card-content .content {
+.ellipsis-after-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  padding: 0;
+  margin: auto;
+}
+
+.content{
   height: 300px;
   overflow: scroll;
+}
+
+.content-hr{
+  margin: .75rem 0
 }
 
 .edit-button {
@@ -190,4 +203,13 @@ label.is-checkbox {
       margin-left: calc(-0.575em - #{$button-border-width});
     }
   }
+}
+
+.height-250{
+  height:250px
+}
+
+.is-height-150{
+  height:150px;
+  object-fit: contain;
 }
