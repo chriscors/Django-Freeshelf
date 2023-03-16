@@ -4,11 +4,86 @@
 {% load static %}
 
 {% block content %}
-  <p>{{book.title}}</p>
-  <p>{{book.author}}</p>
-  <p>{{book.description}}</p>
-  <p>{{book.url}}</p>
-  <p>{{book.category}}</p>
-  <a href={% url 'resource_edit' book.slug%} class="button">Edit</a>
-  <a href={% url 'resource_delete' book.slug%} class="button">Delete</a>
+ <header class="header">
+  <div class="columns">
+    <div class="column">
+      <p class='title'>{{book.title}} Details</p>
+    </div>
+</header>
+
+<div class="columns is-flex is-justify-content-center">
+
+
+    <div class="column is-one-third">
+      <div class="card">
+        <div class="card-image">
+          <figure class="image is4by3 p-3 ">
+            <img class = "is-center"src="{{book.img_url}}" onerror="{% static 'books/open-book.png' %}';" class="mb-1" >
+          </figure>
+        </div>
+        <header class="list-card-header card-header">
+          <h3 class="ellipsis-after-2 card-header-title is-flex is-justify-content-center is-align-items-center"><a href={{book.url}}>
+            {{book.title}}
+          </a></h3>
+        </header>
+        <div class="card-content">
+          <h4 class="is-size-6 ellipsis-after-1"><span class="has-text-weight-bold">Author: </span>{{book.author}}</h4>
+          <h4 class="is-size-6 ellipsis-after-1"><span class="has-text-weight-bold">Category: </span>{{book.category.type}}</h4>
+          <hr class='content-hr'>
+          <div class="content">
+            <h4 class="is-size-6">Description:</h4>
+            <p style="display:inline-block;  overflow:scroll;">{{book.description}}</p>
+          </div>
+          <div class="columns is-justify-content-end">
+            <div class="column is-narrow">
+              {% if user in book.users.all %}
+                <a href = {% url 'resource_unfavorite' book.pk %} class="icon a-heart">
+                  <i class="heart-icon is-size-5 fa fa-heart fa-solid  has-text-danger" aria-hidden="true"></i>
+                </a>
+              {% else %}
+                <a href = {% url 'resource_favorite' book.pk %} class="icon a-heart">
+                  <i class="heart-icon is-size-5 fa fa-heart fa-regular  has-text-danger" aria-hidden="true"></i>
+                </a>
+              {% endif %}
+            </div>
+            <div class="column is-narrow">
+              <a href="{% url 'resource_edit' book.slug%} " class="edit-button button is-primary">Edit</a>
+            </div>
+            <div class="column is-narrow">
+              <a href="{% url 'resource_delete' book.slug%} " class="edit-button button is-danger">Delete</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+</div>
+<script>
+    
+        var icons = document.getElementsByClassName("heart-icon");
+
+      for (let el of icons) {
+        el.addEventListener("mouseover",(event) => {
+            if(el.classList.contains("fa-regular")) {
+                el.classList.remove("fa-regular");
+                el.classList.add("fa-solid");
+            }
+            else {
+                el.classList.remove("fa-solid");
+                el.classList.add("fa-regular");
+            }
+        })
+        el.addEventListener("mouseleave",(event) => {
+            if(el.classList.contains("fa-regular")) {
+                el.classList.remove("fa-regular");
+                el.classList.add("fa-solid");
+            }
+            else {
+                el.classList.remove("fa-solid");
+                el.classList.add("fa-regular");
+            }
+        })
+        };
+</script>
 {% endblock content %}

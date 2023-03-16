@@ -8,12 +8,12 @@ class Resource(models.Model):
     title = models.CharField(max_length=150)
     author = models.CharField(max_length=150)
     description = models.TextField()
-    url = models.TextField(blank=True, null=True, unique=True)
+    url = models.CharField(max_length=400, blank=True, null=True, unique=False)
     slug = models.SlugField(null=True, unique=True)
     created_at = models.DateTimeField(auto_now=False, auto_now_add=True)
     img_url = models.TextField(blank=True, null=True)
     category = models.ForeignKey(
-        "Category", on_delete=models.CASCADE, null=True)
+        "Category", on_delete=models.CASCADE, null=True, blank=True)
     api_id = models.CharField(max_length=50)
 
     def __str__(self):
@@ -33,7 +33,15 @@ class Resource(models.Model):
 
 class Category(models.Model):
     type = models.CharField(max_length=150)
-    slug = models.SlugField(default=slugify(type))
+    slug = models.SlugField(null=True, unique=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.type)
+        return super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.type
 
 
 class User(AbstractUser):

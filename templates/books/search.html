@@ -43,6 +43,44 @@
       <div class="card">
         <div class="card-image">
           <figure class="image is4by3 p-3 ">
+            <img class = "is-center is-height-150"src="{{result.img_url}}" onerror="{% static 'books/open-book.png' %}';" class="mb-1" >
+          </figure>
+        </div>
+        <header class="list-card-header card-header">
+          <h3 class="ellipsis-after-2 card-header-title"><a href={{result.url}}>
+            {{result.title}}
+          </a></h3>
+        </header>
+        <div class="card-content">
+          <h4 class="is-size-6 ellipsis-after-1"><span class="has-text-weight-bold">Author: </span>{{result.author}}</h4>
+          <h4 class="is-size-6 ellipsis-after-1"><span class="has-text-weight-bold">Category: </span>{{result.category.type}}</h4>
+          <hr class='content-hr'>
+          <div class="content">
+            <h4 class="is-size-6">Description:</h4>
+            <p style="display:inline-block;  overflow:scroll;">{{result.description}}</p>
+          </div>
+          <div class="columns is-justify-content-end">
+            <div class="column is-narrow">
+              <a href="{% url 'resource_add' result.api_id %}" class="edit-button button is-primary">Add to Library</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+
+  {% endfor %}
+</div>
+
+{% endif %}
+{% endblock content %}
+
+
+    <div class="column is-one-quarter">
+      <div class="card">
+        <div class="card-image">
+          <figure class="image is4by3 p-3 ">
             <img class = "is-center"src="{{result.img_url}}" alt="Not Found" onerror="{% static 'books/open-book.png' %}';" class="image is1by1" style = 'max-width:120px;"'>
           </figure>
         </div>
@@ -62,10 +100,3 @@
       </div>
     </div>
     
-
-  {% endfor %}
-</div>
-
-{% endif %}
-{% endblock content %}
-

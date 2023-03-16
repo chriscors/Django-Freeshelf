@@ -25,12 +25,6 @@
         </form>
     </div>
     <div class="column is-narrow is-flex is-align-items-center">
-
-      {% comment %} {% if user in book.users.all %}
-        <a href = {% url 'resource_unfavorite' book.pk %} class="icon a-heart">
-          <i class="heart-icon is-size-5 fa fa-heart fa-solid  has-text-danger" aria-hidden="true"></i>
-        </a>
-      {% else %} {% endcomment %}
     </div>
     <div class="columns is-narrow"></div>
   </div>
@@ -45,27 +39,16 @@
             <img class = "is-center"src="{{book.img_url}}" onerror="{% static 'books/open-book.png' %}';" class="mb-1" >
           </figure>
         </div>
-        <header class="card-header">
-          <h3 class="card-header-title">
+        <header class="list-card-header card-header">
+          <h3 class="ellipsis-after-2 card-header-title"><a href={{book.url}}>
             {{book.title}}
-          </h3>
-          {% comment %} <div class="card-header-icon">
-            {% if user in book.users.all %}
-              <a href = {% url 'resource_unfavorite' book.pk %} class="icon">
-                <i class="heart-icon fa fa-heart fa-solid  has-text-danger" aria-hidden="true"></i>
-              </a>
-            {% else %}
-              <a href = {% url 'resource_favorite' book.pk %} class="icon">
-                <i class="heart-icon fa fa-heart fa-regular  has-text-danger" aria-hidden="true"></i>
-              </a>
-            {% endif %}
-          </div> {% endcomment %}
+          </a></h3>
         </header>
         <div class="card-content">
+          <h4 class="is-size-6 ellipsis-after-1"><span class="has-text-weight-bold">Author: </span>{{book.author}}</h4>
+          <h4 class="is-size-6 ellipsis-after-1"><span class="has-text-weight-bold">Category: </span>{{book.category.type}}</h4>
+          <hr class='content-hr'>
           <div class="content">
-            <h4 class="is-size-6">Author: {{book.author}}</h4>
-            <h4 class="is-size-6">Category: {{book.category.type}}</h4>
-            <hr>
             <h4 class="is-size-6">Description:</h4>
             <p style="display:inline-block;  overflow:scroll;">{{book.description}}</p>
           </div>

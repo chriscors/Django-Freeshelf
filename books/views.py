@@ -39,28 +39,44 @@ def search(request):
 
             response = requests.get(
                 api_base + api_params)
-            print(response)
-            print(response.json())
-            print(response.url)
-            print(len(response.json()))
+
             responses = response.json()
 
             results = []
             for result in responses['items']:
+                print(result['volumeInfo'])
                 results.append(Resource(
                     title=result['volumeInfo']['title'],
-                    author=result['volumeInfo']['authors'][0],
                     url=result['volumeInfo']['infoLink'],
                     api_id=result['id'],))
                 try:
-                    results[-1].description = result['volumeInfo']['description']
+                    print({result['volumeInfo']['authors'][0]})
+                    results[-1].author = ", ".join(
+                        result['volumeInfo']['authors'])
+                    print(f'AUTHOR ASSIGN: {results[-1].author}\n')
                 except:
                     print("description unavailable")
+
+                try:
+                    results[-1].description = result['volumeInfo']['description']
+                except:
+                    print("author unavailable\n")
 
                 try:
                     results[-1].img_url = result['volumeInfo']['imageLinks']['thumbnail']
                 except:
                     print("image unavailable")
+
+                try:
+                    category = Category(
+                        type=result['volumeInfo']['categories'][0])
+                    # category = Category.objects.get_or_create(
+                    #     type=result['volumeInfo']['categories'][0])
+                    print(category)
+                    print(category.type)
+                    results[-1].category = category
+                except:
+                    print("category unavailable")
 
                 print(results[-1].__dict__)
             print(results)
@@ -73,7 +89,7 @@ def search(request):
     return render(request, 'search.html', {'form': form})
 
 
-@login_required
+@ login_required
 def resource_add(request, api_id):
     api_base = 'https://www.googleapis.com/books/v1/volumes?q='+api_id
 
@@ -85,9 +101,15 @@ def resource_add(request, api_id):
     print(response.url)
     result = result['items'][0]
     book = Resource(title=result['volumeInfo']['title'],
-                    author=result['volumeInfo']['authors'][0],
                     url=result['volumeInfo']['infoLink'],
                     api_id=result['id'],)
+
+    try:
+        print(result['volumeInfo']['authors'][0])
+        book.author = ", ".join(result['volumeInfo']['authors'])
+        print(f'AUTHOR ASSIGN: {book.author}\n')
+    except:
+        print("description unavailable")
 
     try:
         book.description = result['volumeInfo']['description']
@@ -99,6 +121,14 @@ def resource_add(request, api_id):
     except:
         print("image unavailable")
 
+    try:
+        category = Category.objects.get_or_create(
+            type=result['volumeInfo']['categories'][0])
+
+        category.save()
+        book.category = category
+    except:
+        print("category unavailable")
     book.save()
 
     edit_form = EditBookForm(instance=book)
@@ -107,29 +137,48 @@ def resource_add(request, api_id):
                   {'form': edit_form, 'book': book})
 
 
-@login_required
+@ login_required
 def resource_details(request, slug):
     book = get_object_or_404(Resource, slug=slug)
     return render(request, 'details.html', {'book': book})
 
 
-@login_required
+@ login_required
 def resource_delete(request, slug):
     book = get_object_or_404(Resource, slug=slug)
     book.delete()
     return redirect('index')
 
 
-@login_required
+@ login_required
 def resource_edit(request, slug):
     book = get_object_or_404(Resource, slug=slug)
+    print(book.__dict__)
+    print(book)
+    if request.method == 'POST':
+        # print(book.__dict__)
+        form = EditBookForm(request.POST, initial=book.__dict__)
+
+        if form.is_valid():
+            book.title = form.cleaned_data['title']
+            book.author = form.cleaned_data['author']
+            book.category = form.cleaned_data['category']
+
+            book.description = form.cleaned_data['description']
+
+            book.url = form.cleaned_data['url']
+            book.save()
+
+            return redirect('resource_details', slug=book.slug)
+        print(form.errors)
+
     edit_form = EditBookForm(instance=book)
 
     return render(request, 'edit.html',
                   {'form': edit_form, 'book': book})
 
 
-@login_required
+@ login_required
 def favorite(request, pk):
 
     resource = get_object_or_404(Resource, pk=pk)
@@ -139,7 +188,7 @@ def favorite(request, pk):
     return redirect('index')
 
 
-@login_required
+@ login_required
 def unfavorite(request, pk):
     resource = get_object_or_404(Resource, pk=pk)
 

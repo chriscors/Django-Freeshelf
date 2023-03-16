@@ -4,12 +4,52 @@
 {% load static %}
 
 {% block content %}
- 
-  {{form.title}}
-  {{form.author}}
-  {{form.description}}
-  {{form.url}}
-  {{form.category}}
+<header class="header">
+  <div class="columns">
+    <div class="column">
+      <p class='title'>Edit {{book.title}}</p>
+    </div>
+</header>
+<div class="columns is-flex is-justify-content-center">
 
-  <a href={% url 'resource_details' book.slug%} class="button">Save</a>
+
+    <div class="column is-one-third">
+      <div class="card">
+        <div class="card-image">
+          <figure class="image is4by3 p-3 ">
+            <img class = "is-center"src="{{book.img_url}}" onerror="{% static 'books/open-book.png' %}';" class="mb-1" >
+          </figure>
+        </div>
+        <form action="{% url 'resource_edit' book.slug %}" method="POST">
+          {% csrf_token %}
+          <header class="list-card-header card-header">
+            <h3 class="card-header-title is-flex is-justify-content-center is-align-items-center">
+              Title:&nbsp;  {{form.title | add_class:"input"}}
+            </h3>
+          </header>
+          <div class="card-content">
+            <h4 class="is-size-6 "><span class="has-text-weight-bold">Author: </span>{{form.author | add_class:"input"}}</h4>
+            <h4 class="is-size-6 "><span class="has-text-weight-bold">Category: </span>{{form.category | add_class:"input"}}</h4>
+            <h4 class="is-size-6 "><span class="has-text-weight-bold">URL: </span>{{form.url | add_class:"input"}}</h4>
+            <hr class='content-hr'>
+            <div class="content">
+              <h4 class="is-size-6">Description:</h4>
+              <p style="display:inline-block;">{{form.description | add_class:"input height-250"}}</p>
+            </div>
+            <div class="columns is-justify-content-end">
+              <div class="column is-narrow">
+                <button type="submit" class="edit-button button is-primary">Save</a>
+                </div>
+                <div class="column is-narrow">
+                  <a href="{% url 'resource_delete' book.slug%} " class="edit-button button is-danger">Delete</a>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+</div>
 {% endblock content %}
