@@ -31,8 +31,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env("SECRET_KEY")
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = [
+  'bookshelf.chriscorsi.com',
+  'a3840910-4fd4-476e-ad66-54d2337b6086.id.repl.co', 'bookshelf.chriscorsi.com'
+]
+CSRF_TRUSTED_ORIGINS = ['https://bookshelf.chriscorsi.com']
 # Application definition
 
 INSTALLED_APPS = [
@@ -142,3 +145,9 @@ ACCOUNT_ACTIVATION_DAYS = 7
 REGISTRATION_AUTO_LOGIN = True  # Automatically log the user in.
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+CACHES = {
+  'default': {
+    'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+  }
+}
